@@ -15,3 +15,12 @@ stages:
     outs:
     - data/transform
     always_changed: true
+
+  split:
+    cmd: python3 src/split.py data/split data/transform
+    deps:
+    - src/split.py
+    - data/transform
+    outs:
+    - data/split
+    always_changed: true

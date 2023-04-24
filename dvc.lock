@@ -26,3 +26,18 @@ stages:
       md5: bb1f1c7e57b7097b96b6e962e08da586.dir
       size: 141061968
       nfiles: 1888
+  split:
+    cmd: python3 src/split.py data/split data/transform
+    deps:
+    - path: data/transform
+      md5: d751713988987e9331980363e24189ce.dir
+      size: 0
+      nfiles: 0
+    - path: src/split.py
+      md5: 45734c62f5e6d76a2986d96e230c8466
+      size: 1461
+    outs:
+    - path: data/split
+      md5: 53c0d53e6a0b21c5f0256f0fd1f63935.dir
+      size: 141061968
+      nfiles: 1888
