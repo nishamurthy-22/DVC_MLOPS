@@ -1,0 +1,28 @@
+schema: '2.0'
+stages:
+  ingest:
+    cmd: python3 src/ingest.py data/ingest
+    deps:
+    - path: src/ingest.py
+      md5: 182b9c01de5f54dcc1e8f64fa6b1b6e8
+      size: 185
+    outs:
+    - path: data/ingest
+      md5: 9c8906ec356f7724e8381703b5739999.dir
+      size: 142233866
+      nfiles: 3778
+  transform:
+    cmd: python3 src/transform.py data/transform data/ingest
+    deps:
+    - path: data/ingest
+      md5: 9c8906ec356f7724e8381703b5739999.dir
+      size: 142233866
+      nfiles: 3778
+    - path: src/transform.py
+      md5: 10db0e17eee7afb359885daa9502470e
+      size: 3616
+    outs:
+    - path: data/transform
+      md5: bb1f1c7e57b7097b96b6e962e08da586.dir
+      size: 141061968
+      nfiles: 1888

@@ -1,0 +1,17 @@
+stages:
+  ingest:
+    cmd: python3 src/ingest.py data/ingest 
+    deps:
+    - src/ingest.py 
+    outs:
+    - data/ingest
+    always_changed: true
+
+  transform:
+    cmd: python3 src/transform.py data/transform data/ingest
+    deps:
+    - src/transform.py
+    - data/ingest
+    outs:
+    - data/transform
+    always_changed: true
