@@ -24,3 +24,37 @@ stages:
     outs:
     - data/split
     always_changed: true
+
+  train:
+    cmd: python3 src/train.py data/train data/split
+    deps:
+    - src/train.py
+    - data/split
+    params:
+    - yolov5.weights
+    outs:
+    - data/train
+    always_changed : true 
+
+  predict:
+    cmd: python3 src/predict.py data/predict data/split
+    deps:
+    - src/predict.py
+    - data/split
+    params:
+    - yolov5.weights
+    outs:
+    - data/predict
+    always_changed : true 
+
+  compare:
+    cmd: python3 src/compare.py data/compare data/train data/predict
+    deps:
+    - src/compare.py
+    - data/train
+    - data/predict
+    params:
+    - yolov5.count
+    outs:
+    - data/compare
+    always_changed : true 

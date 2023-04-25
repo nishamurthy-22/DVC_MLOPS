@@ -1,9 +1,7 @@
-
 import os
 from sklearn.model_selection import train_test_split
 import shutil
 import sys
-
 
 inputpath= sys.argv[2]
 outputpath= sys.argv[1]

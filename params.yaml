@@ -1,0 +1,8 @@
+yolov5:
+  weights: pretrained/best.pt
+  count: 1
+  dpath: dataset1.zip
+  hyps:
+    epochs: 1
+    batch: 16
+    optimizer: Adam

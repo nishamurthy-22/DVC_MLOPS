@@ -4,8 +4,8 @@ stages:
     cmd: python3 src/ingest.py data/ingest
     deps:
     - path: src/ingest.py
-      md5: 182b9c01de5f54dcc1e8f64fa6b1b6e8
-      size: 185
+      md5: ac145f9cfa5fc7fcd46b6bcf287693f6
+      size: 259
     outs:
     - path: data/ingest
       md5: 9c8906ec356f7724e8381703b5739999.dir
@@ -34,10 +34,68 @@ stages:
       size: 0
       nfiles: 0
     - path: src/split.py
-      md5: 45734c62f5e6d76a2986d96e230c8466
-      size: 1461
+      md5: 6a572a096c84473a95b425e788677642
+      size: 1459
     outs:
     - path: data/split
       md5: 53c0d53e6a0b21c5f0256f0fd1f63935.dir
       size: 141061968
       nfiles: 1888
+  train:
+    cmd: python3 src/train.py data/train data/split
+    deps:
+    - path: data/split
+      md5: ddac358e93442e07a7b31b92abd38be7.dir
+      size: 141296686
+      nfiles: 1890
+    - path: src/train.py
+      md5: fa5290375b1bc7bb80bc1516681a24aa
+      size: 486
+    params:
+      params.yaml:
+        yolov5.weights: pretrained/best.pt
+    outs:
+    - path: data/train
+      md5: c527c870c7fefc99b03ecc37eeecd561.dir
+      size: 9
+      nfiles: 1
+  predict:
+    cmd: python3 src/predict.py data/predict data/split
+    deps:
+    - path: data/split
+      md5: ddac358e93442e07a7b31b92abd38be7.dir
+      size: 141296686
+      nfiles: 1890
+    - path: src/predict.py
+      md5: 7fcb6216444650891a74d04575fc88bb
+      size: 465
+    params:
+      params.yaml:
+        yolov5.weights: pretrained/best.pt
+    outs:
+    - path: data/predict
+      md5: 974ce00baf07b6fbf0454750780d564d.dir
+      size: 11
+      nfiles: 1
+  compare:
+    cmd: python3 src/compare.py data/compare data/train data/predict
+    deps:
+    - path: data/predict
+      md5: 974ce00baf07b6fbf0454750780d564d.dir
+      size: 11
+      nfiles: 1
+    - path: data/train
+      md5: c527c870c7fefc99b03ecc37eeecd561.dir
+      size: 9
+      nfiles: 1
+    - path: src/compare.py
+      md5: d9a32637951c8c4857288c870095abd7
+      size: 1174
+    params:
+      params.yaml:
+        yolov5.count: 2
+    outs:
+    - path: data/compare
+      md5: a64e9ed70b4a53b236dd47c634de5c65.dir
+      size: 11
+      nfiles: 1
